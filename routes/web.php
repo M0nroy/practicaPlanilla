@@ -20,3 +20,7 @@ Route::get('/', function () {
 
 //Llamamos el metodo index del controlador empleados
 Route::get('/empleados_activos', [empleadosController::class, 'index']);
+Route::get('/formulario', [empleadosController::class, 'getformulario'])->name('formularioRegistro');
+Route::post('/registrarEmp', [empleadosController::class, 'store'])->name('guardar.empleados');
+Route::put('/actualizarEmp/{id}', [empleadosController::class, 'update'])->name('actualizar.empleado');
+Route::put('/desactivarEmp/{id}', [empleadosController::class, 'destroy'])->name('desactivar.empleado');

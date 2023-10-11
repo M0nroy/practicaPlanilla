@@ -1,37 +1,53 @@
 @extends('template')
 
 @section('content')
-<div class="container">
-    <form method="post">
-        <div class="mb-3 row">
-            <label for="inputName" class="col-4 col-form-label">Nombre completo</label>
-            <div class="col-8">
-                <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Ingrese nombre completo">
-            </div>
-        </div>
-        <div class="mb-3 row">
-            <label for="inputName" class="col-4 col-form-label">Telefono</label>
-            <div class="col-8">
-                <input type="tel" class="form-control" name="telefono" id="telefono" placeholder="Ingrese telefono">
-            </div>
-        </div>
-        <div class="mb-3 row">
-            <label for="inputName" class="col-4 col-form-label">Salario</label>
-            <div class="col-8">
-                <input type="number" class="form-control" name="salario" id="salario" min="0" placeholder="Ingrese salario">
-            </div>
-        </div>
-        <div class="mb-3">
-            <label for="" class="form-label">Departamento</label>
-            <select class="form-select form-select-lg" name="departamento" id="">
-                <option value="">Jakarta</option>
-            </select>
-        </div>
-        <div class="mb-3 row">
-            <div class="offset-sm-4 col-sm-8">
-                <button type="submit" class="btn btn-primary">Guardar datos</button>
-            </div>
-        </div>
+    <h1 class="text-center">Registro de Empleados</h1>
+
+    <form id="formularioRegistro" action="{{ route('guardar.empleados') }}" method="POST">
+        <!-- asignacion de un token para hacer el envio -->
+        @csrf
+        <label for="">Nombre Completo</label>
+        <input type="text" class="form-control" name="nombre">
+
+        <label for="">Telefono</label>
+        <input type="text" class="form-control" name="celular">
+
+        <label for="">Salario</label>
+        <input type="text" class="form-control" name="salario">
+
+        <label for="">Seleccione un Departamento</label>
+        <select name="departamento" id="" class="form-control">
+            @foreach ($departamentos as $depart)
+                <option value="{{$depart->id}}">{{$depart->nombre}}</option>
+            @endforeach
+        </select>
+
+        <input type="submit" class="btn btn-dark mt-4" value="Guardar Datos">
     </form>
-</div>
+@endsection
+
+@section('scripts')
+<script>
+    //llamando al formulario para mostrar alerta con Jquery
+    $('#formularioRegistro').on('submit', function(e) {
+        e.preventDefault();
+        Swal.fire({
+        title: 'Do you want to save the changes?',
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: 'Save',
+        denyButtonText: `Don't save`,
+        }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+            Swal.fire('Saved!', '', 'success')
+            //accionamos para que la informacion se vaya a la bd
+            this.submit();
+        } else if (result.isDenied) {
+            Swal.fire('Changes are not saved', '', 'info')
+        }
+        })
+    })
+</script>
+
 @endsection
