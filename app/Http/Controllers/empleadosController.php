@@ -25,7 +25,9 @@ class empleadosController extends Controller
         //all(), save(), update(), delete(), find() => select * from table where id = ?
         //Empleados::all(); //select * from empleados
         //select * from empleados where id_estado = 1
-        $empleados = Empleados::select('*')->where('id_estado','=',1)->get();
+
+
+        $empleados = Empleados::join('departamento', 'empleados.id_departamento')->where('id_estado','=',1)->get();
         return view('pages.lista_empleados', array("empleado" => $empleados));
     }
 

@@ -22,19 +22,19 @@
                 <td>{{ $item->nombre }}</td>
                 <td>{{ $item->telefono }}</td>
                 <td>${{ $item->salario }}</td>
-                <td>{{ $item->id_departamento }}</td>
+                <td>{{ $item->departamento }}</td>
                 <td>
                     <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal{{ $item->id }}"><i class="bx bxs-edit"></i></button>
                 </td>
                 <td>
-                    <button type="submit" class="btn btn-danger">
-                        <form id="formDesactivar" action="{{ route('desactivar.empleado', $item->id) }}" method="post">
-                            @csrf
-                            @method('PUT')
+                    <form id="formDesactivar" action="{{ route('desactivar.empleado', $item->id) }}" method="post">
+                        @csrf
+                        @method('PUT')
+                        <button type="submit" class="btn btn-danger">
+                            <i class="bx bxs-trash"></i>
+                        </button>
+                    </form>
 
-                        </form> <i class="bx bxs-trash">
-                        </i>
-                    </button>
                 </td>
             </tr>
 
@@ -91,6 +91,8 @@
                     'Your file has been deleted.',
                     'success'
                 )
+
+                this.submit();
             }
         })
     })
