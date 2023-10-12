@@ -27,7 +27,7 @@ class empleadosController extends Controller
         //select * from empleados where id_estado = 1
 
 
-        $empleados = Empleados::join('departamento', 'empleados.id_departamento')->where('id_estado','=',1)->get();
+        $empleados = Empleados::join('departamento', 'empleados.id_departamento', '=', 'departamento.id')->where('empleados.id_jefe','=', session('jefe_id'))->where('empleados.id_estado','=',1)->select('empleados.*', 'departamento.nombre as departamento')->get();
         return view('pages.lista_empleados', array("empleado" => $empleados));
     }
 
@@ -51,7 +51,7 @@ class empleadosController extends Controller
         $empleado->telefono = $request->post('celular');
         $empleado->salario = $request->post('salario');
         $empleado->id_departamento = $request->post('departamento');
-        $empleado->id_jefe = 1; 
+        $empleado->id_jefe = session('usuario_id'); 
         $empleado->id_estado = 1;
         $empleado->save();
 
