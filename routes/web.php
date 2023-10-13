@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\empleadosController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PDFController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,3 +28,7 @@ Route::put('/actualizarEmp/{id}', [empleadosController::class, 'update'])->name(
 Route::put('/desactivarEmp/{id}', [empleadosController::class, 'destroy'])->name('desactivar.empleado');
 Route::get('/inicioSesion', [LoginController::class, 'iniciarSesion'])->name('inicio.sesion');
 Route::get('/cerrarSesion', [LoginController::class, 'cerrarSesion'])->name('cerrar.sesion');
+Route::get('/prueba', [PDFController::class, 'obetnerEmpleadosById']);
+Route::get('/reporte_empleados', [PDFController::class, 'obtenerEmpleadosByJefe']);
+Route::get('/filtrado_departamentos', [PDFController::class, 'getDepartamentoRepo']);
+Route::get('/reporte_filtrado', [PDFController::class, 'reporteEmpleadosByDepartamento'])->name('reporte.filtrado');

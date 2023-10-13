@@ -27,7 +27,10 @@ class empleadosController extends Controller
         //select * from empleados where id_estado = 1
 
 
-        $empleados = Empleados::join('departamento', 'empleados.id_departamento', '=', 'departamento.id')->where('empleados.id_jefe','=', session('jefe_id'))->where('empleados.id_estado','=',1)->select('empleados.*', 'departamento.nombre as departamento')->get();
+        $empleados = Empleados::join('departamento', 'empleados.id_departamento', '=', 'departamento.id')->
+        where('empleados.id_jefe','=', session('usuario_id'))->
+        where('empleados.id_estado','=',1)->
+        select('empleados.*', 'departamento.nombre as departamento')->get();
         return view('pages.lista_empleados', array("empleado" => $empleados));
     }
 
@@ -80,4 +83,6 @@ class empleadosController extends Controller
 
         return redirect('/empleados_activos');
     }
+
+    
 }
